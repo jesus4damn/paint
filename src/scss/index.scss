@@ -16,9 +16,6 @@ body {
   font-size: 12px;
 }
 
-.container {
-    width:100%;
-}
 
 .paint {
     position:relative;
@@ -29,7 +26,7 @@ body {
 
 .paint__work_space {
     width:100%;
-    height:700px;
+    height:500px;
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid #dcdcdc;
