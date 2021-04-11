@@ -40,6 +40,8 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
-    "normalize.css": "^8.0.1"
+    "file-loader": "^6.2.0",
+    "normalize.css": "^8.0.1",
+    "resolve-url-loader": "^4.0.0-beta.1"
   }
 }
