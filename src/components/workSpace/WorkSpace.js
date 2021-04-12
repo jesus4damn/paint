@@ -8,9 +8,11 @@ export class WorkSpace extends TemplateComponent {
   constructor($root, options = {}) {
     super($root, {
       name: 'WorkSpace',
-      listeners: ['click'],
+      listeners: [],
       ...options
     })
+    this.options = options
+    this.subscriber = options.subscriber
     this.components = [Canvas, Console]
   }
 
@@ -19,7 +21,7 @@ export class WorkSpace extends TemplateComponent {
     let html = '';
     this.components = this.components.map(Component => {
         const $el = $.create('div', Component.className)
-        const component = new Component($el)
+        const component = new Component($el, this.options)
         html += $el.html(component.toHTML()).html()
         return component
     })
@@ -29,10 +31,13 @@ export class WorkSpace extends TemplateComponent {
 
   init() {
     super.init()
+
+    this.subscriber.subscribeComponents(this.components)
     this.components.forEach(component => component.init())
   }
 
-  onClick(event) {
-    console.log(event.target);
+  destroy() {
+    this.subscriber.unsubscribeFromStore()
+    this.components.forEach(component => component.destroy())
   }
 }

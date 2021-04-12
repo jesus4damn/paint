@@ -1,70 +1,41 @@
-import {TemplateComponent} from '@/core/TemplateComponent'
+import { StateComponent } from '../../core/StateComponent';
+import { createToolbar } from './toolbar.template';
+import {$} from '../../core/dom'
+import {toolbarState} from '../../constants'
+import { changeMode } from '../../redux/actions';
 
-export class Toolbar extends TemplateComponent {
+export class Toolbar extends StateComponent {
   static className = 'paint__toolbar'
   constructor($root, options = {}) {
     super($root, {
       name: 'Toolbar',
       listeners: ['click'],
+      subscribe: ['mode'],
       ...options
     })
   }
 
+  prepare() {
+    this.initState(toolbarState)
+  }
+
+  get template() {
+    return createToolbar(this.state)
+  }
 
   toHTML() {
-    return `
-        <div class="buttons">
-          <div class="button button__left active" data-type="button">
-              <i class="material-icons" data-type="button">
-                radio_button_checked
-              </i>
-              <div class="button__drop_list">
-                  <div class="content">
-                      <div class="content__item">
-                          <i class="material-icons">radio_button_checked</i>
-                          <p>Точка</p>
-                      </div>
-                      <div class="content__item">
-                          <i class="material-icons">check_box_outline_blank</i>
-                          <p>Квадрат</p>
-                      </div>
-                      <div class="content__item">
-                          <i class="material-icons">circle</i>
-                          <p>Круг</p>
-                      </div>
-                      <div class="content__item">
-                          <i class="material-icons">circle</i>
-                          <p>Кривая безье</p>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="button button__left" data-type="button">
-              <i class="material-icons" data-type="button">pan_tool</i>
-          </div>
-          <div class="button button__left" data-type="button">
-              <i class="material-icons" data-type="button">delete</i>
-          </div>
-          <div class="button button__left" data-type="button">
-              <i class="material-icons" data-type="button">border_color</i>
-          </div>
-          <div class="button button__left" data-type="button">
-              <i class="material-icons" data-type="button">format_color_fill</i>
-          </div>
-      </div>
-      <div class="buttons">
-          <div class="button" data-type="button">
-              <i class="material-icons" data-type="button">arrow_back</i>
-          </div>
-          <div class="button" data-type="button">
-              <i class="material-icons" data-type="button">cached</i>
-          </div>
-      </div>
-    `
+    return this.template
+  }
+
+  storeChanged(changes) {
+    this.setState({currentMode: changes.mode})
   }
 
 
   onClick(event) {
-    console.log(event.target);
+    const $target = $(event.target)
+    if ($target.data.type === 'button') {
+      this.$dispatch(changeMode($target.data.value))
+    }
   }
 }
