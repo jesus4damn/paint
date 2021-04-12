@@ -5,7 +5,7 @@ export class Console extends TemplateComponent {
   constructor($root, options = {}) {
     super($root, {
       name: 'Console',
-      listeners: ['click'],
+      listeners: [],
       ...options
     })
   }
@@ -17,10 +17,5 @@ export class Console extends TemplateComponent {
             Console:
         </div>
     `
-  }
-
-
-  onClick(event) {
-    console.log(event.target);
   }
 }
