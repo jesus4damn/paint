@@ -14,7 +14,9 @@
         "eol-last":"off",
         "indent":"off",
         "object-curly-spacing":"off",
-        "operator-linebreak":"off"
+        "operator-linebreak":"off",
+        "no-unused-vars":"off",
+        "no-empty":"off"
     },
     "extends":["eslint:recommended", "google"]
 }
