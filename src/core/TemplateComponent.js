@@ -6,6 +6,7 @@ export class TemplateComponent extends DomListener {
     this.name = options.name || ''
     this.subscribe = options.subscribe || []
     this.store = options.store
+    this.components = options.components || []
 
     this.prepare()
   }
@@ -21,6 +22,10 @@ export class TemplateComponent extends DomListener {
   }
 
   storeChanged() {}
+
+  getComponents() {
+    return this.components
+  }
 
   isWatching(key) {
     return this.subscribe.includes(key)

@@ -1,4 +1,4 @@
-class Dom {
+export class Dom {
     constructor(selector, id) {
       this.$el = typeof selector === 'string'
         ? id ? document.querySelector('#' + selector) 
@@ -8,6 +8,10 @@ class Dom {
   
     // get/set html
     html(html) {
+      if (html instanceof Dom) {
+        this.$el.innerHTML = html.$el.outerHTML.trim()
+        return this
+      }
       if (typeof html === 'string') {
         this.$el.innerHTML = html
         return this
@@ -30,6 +34,10 @@ class Dom {
   
     off(eventType, callback) {
       this.$el.removeEventListener(eventType, callback)
+    }
+
+    position() {
+      return this.$el.getBoundingClientRect()
     }
 
     append(node) {

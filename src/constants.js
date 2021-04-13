@@ -12,5 +12,17 @@ export const modes = {
 export const defaultMode = modes.DRAW_POINT
 
 export const toolbarState = {
-    currentMode: modes.DRAW_POINT
+    currentMode: modes.DRAW_POINT,
+    startDraw: false,
+    clearCanvas: false,
+    edgesColorModal: false,
+    fillColorModal: false,
+    edgesColor: '#ff0000',
+    fillColor: '#fffb00',
 }
+
+export const consoleState = {
+    shapes: []
+}
+
+export const canvasSize = {width: 700, height: 500}

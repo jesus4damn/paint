@@ -18,15 +18,7 @@ export class App {
       store: this.store,
       subscriber: this.subscriber
     }
-
-    this.components = this.components.map(Component => {
-      const $el = $.create('div', Component.className)
-      const component = new Component($el, componentOptions)
-      $el.html(component.toHTML())
-      $root.append($el)
-      return component
-    })
-
+    this.components = html(this.components, componentOptions, $root)
     return $root
   }
 
@@ -41,4 +33,22 @@ export class App {
     this.subscriber.unsubscribeFromStore()
     this.components.forEach(component => component.destroy())
   }
+}
+
+function html(components, componentOptions, $root) {
+  const allComponents = []
+  for (let i = 0; i < components.length; i++) {
+    const $el = $.create('div', components[i].className)
+    const component = new components[i]($el, componentOptions)
+    allComponents.push(component)
+    if (component.getComponents().length) {
+      allComponents.push(
+        ...html(component.getComponents(), componentOptions, $el)
+      )
+    } else {
+      $el.html(component.toHTML())
+    }
+    $root.append($el)
+  }
+  return allComponents
 }
